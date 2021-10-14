@@ -1,0 +1,78 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+  <div class="full_listing">
+  {% if This_Listing.img_url %}
+    <img src="{{This_Listing.img_url}}" class="full_pic">
+  {% else %}
+    <img src="https://icatcare.org/app/uploads/2018/07/Thinking-of-getting-a-cat.png" class="full_pic">
+  {% endif %}
+  <div class="full_info">
+    <p><h2>{{This_Listing.title}}</h2>
+      {% if user.is_authenticated %}
+        {% if Subscribed %}
+          <form action="{% url 'listing' id=This_Listing.id %}" method="post">
+            {% csrf_token %}
+            <div hidden>{{ Watchlist_Form }}</div>
+            <input type="submit" style="background-color: red; color: white;" value="Remove from Watchlist">
+          </form>
+        {% else %}
+          <form action="{% url 'listing' id=This_Listing.id %}" method="post">
+            {% csrf_token %}
+            <div hidden>{{ Watchlist_Form }}</div>
+            <input type="submit" style="background-color: green; color: white;" value="Add to Watchlist">
+          </form>
+        {% endif %}
+      {% endif %}
+    </p>
+    <h5>By {{This_Listing.user}}</h5>
+    <p>{{This_Listing.desc}}</p>
+    <p><b>Curerent Bid: </b>${{ This_Listing.highest_bid }}</p>
+  {% if This_Listing.open == True %}
+    {% if This_User == Creator %}
+    <form action="{% url 'editor' id=This_Listing.id %}" method="post">
+      {% csrf_token %}
+      <input type="submit" style="background-color: blue; color: white;" value="Edit Listing">
+    </form>
+    <form action="{% url 'close' id=This_Listing.id %}" method="post">
+      {% csrf_token %}
+      <input type="submit" style="background-color: red; color: white;" value="Close Auction">
+    </form>
+    {% elif user.is_authenticated %}
+      <form action="{% url 'listing' id=This_Listing.id%}" method="post">
+      {% csrf_token %}
+      <p>{{ Bid_Form }}
+      <input type="submit" style="background-color: blue; color: white;"></p>
+        {% if warning %}
+          <p>{{warning}}</p>
+        {% endif %}
+      </form>
+    {% endif %}
+  {% else %}
+    {% if This_User == Creator %}
+      <p> *You have closed this listing.* </p>
+    {% elif This_User == This_Listing.highest_bid.user %}
+      <p> *You have won the bid, congratulations!* </p>
+    {% else %}
+      <p> *This listing has been closed.* </p>
+    {% endif %}
+  {% endif %}
+  </div>
+
+  <div class="comments">
+  <h4>Comments</h4>
+  {% for comment in Comments %}
+    <div class="each_comment">
+      <h5>{{comment.user}}</h5>
+      <p>{{comment.body}}</p>
+    </div>
+  {% endfor %}
+  {% if user.is_authenticated %}
+  <form action="{% url 'listing' id=This_Listing.id%}" method="post">
+    {% csrf_token %}
+    {{Comment_Form}}
+    <p class="comment_button"><input type="submit" style="background-color: blue; color: white;"></p>
+  </form>
+  {% endif %}
+  </div>
+{% endblock %}

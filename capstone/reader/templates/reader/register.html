@@ -1,0 +1,33 @@
+{% extends "reader/layout.html" %}
+
+{% block body %}
+
+<div class="register-form-box">
+
+    <h3 style="margin-bottom: 20px;">Register</h3>
+
+    {% if message %}
+        <div>{{ message }}</div>
+    {% endif %}
+
+    <form action="{% url 'register' %}" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <input class="form-control" autofocus type="text" name="username" placeholder="Username">
+        </div>
+        <div class="form-group">
+            <input class="form-control" type="email" name="email" placeholder="Email Address">
+        </div>
+        <div class="form-group">
+            <input class="form-control" type="password" name="password" placeholder="Password">
+        </div>
+        <div class="form-group">
+            <input class="form-control" type="password" name="confirmation" placeholder="Confirm Password">
+        </div>
+        <input style="float: right;" class="btn btn-primary" type="submit" value="Register">
+    </form>
+
+    <span style="font-size:14px; margin-left: 9px; position: relative; top: 15px;">Already have an account? <a href="{% url 'login' %}">Log In here.</a></span>
+
+</div>
+{% endblock %}

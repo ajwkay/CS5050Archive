@@ -1,0 +1,22 @@
+{% extends "auctions/layout.html" %}
+
+{% block title %}
+    Auctions
+{% endblock %}
+
+{% block body %}
+    <h1>Create New Listing</h1>
+    <form action="{% url 'index' %}" method="post">
+      {% csrf_token %}
+      <p>{{ Edit_Form.title }}</p>
+      <p>{{ Edit_Form.desc }}</p>
+      <p>{{ Edit_Form.starting_bid }}</p>
+      <p>{{ Edit_Form.img_url }}</p>
+      <p hidden>{{ Edit_Form.id }}</p>
+      <p>{{ Edit_Form.category }}</p>
+      <p><input type="submit" style="background-color: blue; color: white;"></p>
+    </form>
+
+
+
+{% endblock %}

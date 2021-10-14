@@ -1,0 +1,80 @@
+{% extends "network/layout.html" %}
+
+{% block title %}
+    Your Feed
+{% endblock %}
+
+{% block body %}
+    <h1>Your Feed</h1>
+
+    <div class="alert alert-primary" role="alert">
+      <h3>New Post</h3>
+      <form action="{% url 'feed' %}" method="post">
+        {% csrf_token %}
+        <p>{{ Post_Form.body }}</p>
+        <p><input type="submit" class="btn btn-info"></p>
+      </form>
+    </div>
+
+{% for post in page_obj %}
+<div class="alert alert-info" role="alert">
+  <h3><a href="{% url 'profile' id=post.user.id %}">{{ post.user }}</a></h3>
+  <p><form action="{% url 'edit' %}" method="post" class="edit_form">{% csrf_token %}<span class="editing_body" id='ebod{{post.id}}'> {{ post.body }} </span></form></p>
+  <p>
+    Posted on: {{ post.datetimestamp }}
+    {% if post.user == This_User %}
+        <a action="#" class="edit_button" id='ebut{{post.id}}' data-pk='{{post.id}}' style="color:blue"><u>[Edit]</u></a>
+    {% endif %}
+  </p>
+    <form action="{% url 'like' %}" method="post" class="like_form">
+      {% csrf_token %}
+      <input hidden type="text" name="postID" id="postID" value={{post.id}}>
+      <span class="like_button" id='{{post.id}}'>
+        {% if user.is_authenticated %}
+          {% for user in post.liked.all %} {% if user == This_User %} <div hidden> {% endif %} {% endfor %}
+          <input type="submit" class="btn btn-outline-primary btn-sm" value="{{ post.liked.all|length }} 🤍">
+          {% for user in post.liked.all %} {% if user == This_User %} </div> <input type="submit" class="btn btn-primary btn-sm" value="{{ post.liked.all|length }} ❤️"> {% endif %} {% endfor %}
+        {% else %}
+          <button class="btn btn-outline-primary btn-sm">{{ post.liked.all|length }} 🤍</button>
+        {% endif %}
+      </span>
+    </form>
+</div>
+{% endfor %}
+
+<nav aria-label="...">
+  <ul class="pagination justify-content-center">
+    {% if page_obj.has_previous %}
+      <li class="page-item">
+        <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+      </li>
+    {% else %}
+      <li class="page-item disabled">
+        <span class="page-link">Previous</span>
+      </li>
+    {% endif %}
+    {% for page in Page_List %}
+      {% if page|add:"1" == page_obj.number %}
+        <li class="page-item active" aria-current="page">
+          <span class="page-link">
+            {{page|add:"1"}}
+            <span class="sr-only">(current)</span>
+          </span>
+        </li>
+      {% else %}
+        <li class="page-item"><a class="page-link" href="?page={{page|add:'1'}}">{{page|add:"1"}}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if page_obj.has_next %}
+      <li class="page-item">
+        <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+      </li>
+    {% else %}
+      <li class="page-item disabled">
+        <span class="page-link">Previous</span>
+      </li>
+    {% endif %}
+  </ul>
+</nav>
+
+{% endblock %}

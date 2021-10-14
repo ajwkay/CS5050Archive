@@ -1,0 +1,32 @@
+{% extends "reader/layout.html" %}
+
+{% block body %}
+
+{% if Errors %}
+<span class="error-messages">
+    <ul>
+    {% for subject in Upload_Form %}
+      {% for error in subject.errors %}
+        <li>{{error|escape}}</li>
+      {% endfor %}
+    {% endfor %}
+    </ul>
+</span>
+{% endif %}
+<div class="submit-form-box">
+  <div class="alert alert-dark">
+    <h3 style="margin-bottom: 20px;">Upload an I.F. file!</h3>
+    <form action="{% url 'submit' %}" enctype='multipart/form-data' method="post">
+      {% csrf_token %}
+      <p>{{Upload_Form.title}}
+      {{Upload_Form.genre}}</p>
+      <p>{{Upload_Form.description}}</p>
+      <p><strong>Cover Photo:</strong> &nbsp; {{Upload_Form.cover}}<span class="form-tooltip">(Optimal photo size is 150x250px)</span></p>
+      <p><strong>Story File:</strong> &nbsp; {{Upload_Form.story_file}} &nbsp; <span class="form-tooltip">(Only .zip, .rar and .7z files allowed. Ensure that the main .html file is in the base directory.)</span></p>
+      <p><strong>Story Format:</strong> &nbsp; {{Upload_Form.editor_used}}</p>
+      <button type="submit" class="btn btn-success" value="Submit" style="font-size: 15px; position: absolute; bottom: 23px; right: 23px;">Submit</button>
+    </form>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,115 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{% block title %}Auctions{% endblock %}</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link href="{% static 'auctions/styles.css' %}" rel="stylesheet">
+        <script src="script.js"></script>
+        <style>
+          .main {
+            height: 400px;
+            width: auto;
+            border: 5px outset red;
+            padding: 5px;
+            margin: 5px;
+            background-color: lightblue;
+          }
+          .pic {
+            position: relative;
+            float: left;
+            width: 350px;
+            height: 350px;
+            margin: 5px;
+          }
+          .info{
+            margin: 5px;
+            text-align: justify;
+          }
+          .full_listing {
+            height: 530px;
+            width: auto;
+            border: 5px outset red;
+            padding: 5px;
+            margin: 5px;
+            background-color: lightblue;
+          }
+          .full_pic {
+            float: left;
+            width: 500px;
+            height: 500px;
+            margin: 5px;
+            padding: 5px;
+          }
+          .full_info{
+            margin: 5px;
+            text-align: justify;
+          }
+
+          .comments{
+            position:absolute;
+            top: 730px;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            float: left;
+            padding: 5px;
+          }
+
+          .each_comment{
+            text-align: justify;
+            height: auto;
+            width: auto;
+            border: 5px outset red;
+            background-color: lightblue;
+            padding: 10px;
+            left: 0px;
+            margin: 5px;
+          }
+
+          .comment_button{
+            float: right;
+          }
+        </style>
+    </head>
+    <body>
+        <h1>Auctions</h1>
+        <div>
+            {% if user.is_authenticated %}
+                Signed in as <strong>{{ user.username }}</strong>.
+            {% else %}
+                Not signed in.
+            {% endif %}
+        </div>
+        <ul class="nav">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'index' %}">Active Listings</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'categorylist' %}">Categories</a>
+            </li>
+            {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'watchlist' %}">Watchlist</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'creator' %}">Create New Listing</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">Log In</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'register' %}">Register</a>
+                </li>
+            {% endif %}
+        </ul>
+        <hr>
+        {% block body %}
+        {% endblock %}
+    </body>
+</html>

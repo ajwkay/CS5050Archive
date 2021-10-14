@@ -1,0 +1,90 @@
+textarea {
+    min-height: 400px;
+}
+
+#submit-button {
+  margin-top: 11px;
+}
+
+.read-mail {
+  border: 1px solid black;
+  width: 80vw;
+  text-align: left;
+  float: left;
+  padding: 5px;
+  margin: 3px;
+  background-color: gray;
+}
+
+.unread-mail {
+  border: 1px solid black;
+  width: 80vw;
+  text-align: left;
+  float: left;
+  padding: 5px;
+  margin: 3px;
+  background-color: white;
+}
+
+.bodyz {
+  width: auto;
+  text-align: justify;
+  text-justify: auto;
+  float: left;
+  padding-top: 8px;
+  height: auto;
+  padding-bottom: 10px;
+  white-space: pre-wrap;
+
+}
+
+.senderz {
+  border: 1px solid black;
+  width: 70vw;
+  text-align: left;
+  margin: 3px;
+  padding-left: 5px;
+  padding-top: 3px;
+  height: 28px;
+  display: inline-block;
+}
+
+.recipientz {
+  border: 1px solid black;
+  width: 70vw;
+  text-align: left;
+  margin: 3px;
+  margin-left: 23.5px;
+  padding-left: 5px;
+  padding-top: 3px;
+  height: 28px;
+  display: inline-block;
+}
+
+.from {
+  width: auto;
+  vertical-align: middle;
+  float: left;
+}
+
+.to {
+  width: auto;
+  position: relative;
+  vertical-align: middle;
+  float: left;
+}
+
+.content {
+  vertical-align: middle;
+  float: left;
+  clear: left;
+}
+
+.timestampz {
+  display: inline-block;
+  font-size: 12px;
+  padding-right: 5px;
+}
+.replyz {
+  display: inline-block;
+}

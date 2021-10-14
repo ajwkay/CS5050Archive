@@ -1,0 +1,24 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Watchlist</h2>
+    {% if These_Listings %}
+      {% for entry in These_Listings %}
+      <div class="main">
+        {% if entry.img_url %}
+        <img src="{{entry.img_url}}" class="pic">
+        {% else %}
+        <img src="https://icatcare.org/app/uploads/2018/07/Thinking-of-getting-a-cat.png" class="pic">
+        {% endif %}
+        <div class="info">
+          <h3><a href="{% url 'listing' id=entry.id %}">{{entry.title}}</a></h3>
+          <h6>By {{entry.user}}</h6>
+          <p>{{entry.desc}}</p>
+          <p><b>Curerent Bid: </b>${{ entry.highest_bid }}</p>
+        </div>
+      </div>
+      {% endfor %}
+    {% else %}
+      <h4>Your watchlist is empty</h4>
+    {% endif %}
+{% endblock %}

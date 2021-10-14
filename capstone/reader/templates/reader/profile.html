@@ -1,0 +1,154 @@
+{% extends "reader/layout.html" %}
+
+{% block body %}
+<div class="profile-info-box">
+  <div class="alert alert-dark" role="alert">
+    <div style="display:block;">
+      <h3 style="display:inline-block;"><strong>{{This_Profile.user}}'s Profile&emsp;</strong></h3>
+      {% if This_Profile.followers.all|length == 1 %}
+        <span class="follower-count" style="position:relative; display:inline-block; top:-8px;">{{This_Profile.followers.all|length}} Follower</span>
+      {% else %}
+        <span class="follower-count" style="position:relative; display:inline-block; top:-8px;">{{This_Profile.followers.all|length}} Followers</span>
+      {% endif %}
+      {% if This_Profile.user.stories_written.all|length == 1 %}
+        <span class="story-count" style="position:relative; display:inline-block; top:-8px;">{{This_Profile.user.stories_written.all|length}} Story</span>
+      {% else %}
+        <span class="story-count" style="position:relative; display:inline-block; top:-8px;">{{This_Profile.user.stories_written.all|length}} Stories</span>
+      {% endif %}
+    </div>
+        {% if user.is_authenticated %}
+          {% if user != This_Profile.user %}
+            <form action="{% url 'profile' id=This_Profile.user.id %}" method="post">
+              {% csrf_token %}
+              <div hidden>{{ Follow_Form }}</div>
+              {% if Followed_Status %}
+                <button type="submit" class="btn btn-info" value="Following" id="unfollow-button">Following</button>
+              {% else %}
+                <button type="submit" class="btn btn-outline-info" value="Follow" id="follow-button">Follow</button>
+              {% endif %}
+            </form>
+          {% endif %}
+        {% endif %}
+      <div style="display:block; position:relative; top:-8px; text-align: justify;">
+      {% if user == This_Profile.user %}
+        {% if This_Profile.intro %}
+          <form action='{% url "intro_edit" %}' method='post' class='intro_edit_area'>{% csrf_token %}<p style="margin-top: 13px;"><span class="profile_intro" style="color: black;">{{This_Profile.intro}}</span> <a action="#" class="intro_edit" data-pk='{{This_Profile.id}}' style="color:blue"><u>[Edit]</u></a></p></form>
+        {% else %}
+          <form action='{% url "intro_edit" %}' method='post' class='intro_edit_area'>{% csrf_token %}<p style="margin-top: 13px;"><span class="profile_intro" style="color: grey;">(Profile intro goes here.)</span> <a action="#" class="intro_edit" data-pk='{{This_Profile.id}}' style="color:blue"><u>[Edit]</u></a></p></form>
+        {% endif %}
+      {% else %}
+        {% if This_Profile.intro %}
+          <p style="margin-top: 13px;">{{This_Profile.intro}}</p>
+        {% else %}
+          <p style="margin-top: 13px; color: grey;">---</p>
+        {% endif %}
+      {% endif %}
+      </div>
+      <p style="font-size: 15px;">Account Created: {{This_Profile.date_time_created}}</p>
+    </div>
+  </div>
+</div>
+{% if This_Profile_Stories %}
+<div class="top-stories-header"><h4 style="display: inline;"><u>Top Stories</u></h4><a href="{% url 'category' type='author' query=This_Profile.user.id %}" style="position: absolute; right:0; bottom:0px; font-size: 17px">View All »</a></div>
+{% else %}
+<div class="top-stories-header">This user has not posted any stories yet :(</div>
+{% endif %}
+{% for story in This_Profile_Stories|dictsortreversed:"avg_rating"|slice:'0:3' %}
+<div class="story-icon-box">
+  <div class="alert alert-dark" role="alert">
+    <img src="{{story.cover.url}}" class="story-icon-cover">
+    <p class="story-icon-title-author"><strong>
+      <a href="{% url 'story' id=story.story_folder_id %}">{{story.title}}</a>
+    </strong></p>
+    <p class="story-icon-genre-rating">
+        {% if story.avg_rating == 0.0 %}
+        <span class="avg-rating-zero" id="avg_rating">
+        {% elif story.avg_rating <= 2.0 %}
+        <span class="avg-rating-lowest" id="avg_rating">
+        {% elif story.avg_rating > 2.0 and story.avg_rating <= 4.0 %}
+        <span class="avg-rating-low" id="avg_rating">
+        {% elif story.avg_rating > 4.0 and story.avg_rating <= 6.0 %}
+        <span class="avg-rating-mid" id="avg_rating">
+        {% elif story.avg_rating > 6.0 and story.avg_rating <= 8.0 %}
+        <span class="avg-rating-high" id="avg_rating">
+        {% elif story.avg_rating >= 8.0 %}
+        <span class="avg-rating-highest" id="avg_rating">
+        {% endif %}
+        {{story.avg_rating|floatformat:2}}★</span> ({{story.reviews.count}}
+        {% if story.reviews.count == 1 %}
+        Review)&nbsp;
+        {% else %}
+        Reviews)&nbsp;
+        {% endif %}
+        {% if story.tags == 'ROMANCE' %}
+          <span class="genre-tag-romance" onclick="gotoCat(this)">
+        {% elif story.tags == 'ADVENTURE' %}
+          <span class="genre-tag-adventure" onclick="gotoCat(this)">
+        {% elif story.tags == 'MYSTERY' %}
+          <span class="genre-tag-mystery" onclick="gotoCat(this)">
+        {% elif story.tags == 'SCI-FI' %}
+          <span class="genre-tag-sci-fi" onclick="gotoCat(this)">
+        {% elif story.tags == 'NON-FICTION' %}
+          <span class="genre-tag-non-fiction" onclick="gotoCat(this)">
+        {% elif story.tags == 'FANTASY' %}
+          <span class="genre-tag-fantasy" onclick="gotoCat(this)">
+        {% elif story.tags == 'COMEDY' %}
+          <span class="genre-tag-comedy" onclick="gotoCat(this)">
+        {% elif story.tags == 'DRAMA' %}
+          <span class="genre-tag-drama" onclick="gotoCat(this)">
+        {% elif story.tags == 'HORROR' %}
+          <span class="genre-tag-horror" onclick="gotoCat(this)">
+        {% elif story.tags == 'THRILLER' %}
+          <span class="genre-tag-thriller" onclick="gotoCat(this)">
+        {% elif story.tags == 'HISTORICAL' %}
+          <span class="genre-tag-historical" onclick="gotoCat(this)">
+        {% endif %}
+            {{story.tags}}
+          </span>
+      <p class="story-icon-abstract">{{story.description}}</p>
+      <p class="story-icon-datetime">Submitted: {{story.date_time_submitted}}</p>
+    </div>
+  </div>
+{% endfor %}
+
+<hr style="border-top: 1px solid grey; margin: auto; margin-top: 25px; width: 97%; float: center;">
+<hr style="border-top: 1px solid grey; margin: auto; margin-top: 2px; width: 97%;">
+
+
+<div class="top-stories-header" style="margin-top: 19px;"><h4 style="display: inline;"><u>Comments</u></h4></div>
+
+
+{% if user.is_authenticated %}
+  <div class= "comment-form">
+    <div class="alert alert-warning" role="alert">
+        <p>Leave a comment!</p>
+        <form action="{% url 'profile' id=This_Profile.user.id %}" method="post">
+          {% csrf_token %}
+          <p>{{ Comment_Form.body }}</p>
+          <p id="comment-submit-button"><input type="submit" class="btn btn-success btn-sm" value="Submit"></p>
+        </form>
+    </div>
+  </div>
+{% else %}
+  <div class="comment-notice">
+    <div class="alert alert-warning" role="alert">
+      Login/Register to leave a comment!
+    </div>
+  </div>
+{% endif %}
+
+{% if not This_Profile.profile_comments.all %}
+<p style="margin: 20px 0 50px 15px;">This profile has no comments yet.</p>
+{% endif %}
+
+{% for comment in This_Profile.profile_comments.all %}
+<div class="comment-box">
+  <div class="alert alert-success" role="alert">
+    <p class="comment-author"><a href="{% url 'profile' id=comment.author.id %}">{{comment.author}}</a></p>
+    <p class="comment-body">{{comment.body}}</p>
+    <p class="comment-datetime">Posted: {{comment.date_time_posted}}</p>
+  </div>
+</div>
+{% endfor %}
+
+{% endblock %}

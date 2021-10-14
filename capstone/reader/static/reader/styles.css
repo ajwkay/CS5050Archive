@@ -1,0 +1,455 @@
+.menu-buttons {
+  word-spacing: 20px;
+  font-size: 16px;
+}
+
+.error-messages {
+  color: red;
+  font-size: 14px;
+  padding: 0 0 0 20px;
+}
+
+.story-icon-cover {
+  width: 150px;
+  height: 230px;
+  display: inline-block;
+  float: left;
+  padding: 0 10px 0 0;
+}
+
+.p-5 {
+  background-color: #deddd8;
+}
+
+.story-icon-box > div {
+  margin: 8px 10px 8px 10px;
+  min-height: 280px;
+  position: relative;
+  background-color: #cdd8da;
+  border: 5px groove black;
+  border-radius: 10px
+}
+
+.submit-form-box > div {
+  margin: 8px 10px 8px 10px;
+  background-color: #cdd8da;
+  border-color: #cdd8da;
+  border: 5px groove black;
+  border-radius: 10px
+}
+
+.submit-form-box > div > form > p {
+  margin-bottom: 20px;
+}
+
+.story-icon-title-author {
+  font-size: 27px;
+  margin: 0px;
+}
+
+.form-tooltip {
+  font-size: 14px;
+  color: blue;
+}
+.story-icon-genre-rating {
+  margin-bottom: 8px;
+}
+
+.story-icon-abstract {
+  line-height: 23px;
+  margin-bottom: 45px;
+  text-align: justify
+}
+
+.story-icon-datetime {
+  font-size: 15px;
+  position: absolute;
+  bottom: 0;
+  right: 23px;
+}
+
+.genre-tag-romance {
+  font-size: 13px;
+  font-weight: bold;
+  color: white;
+  background-color: #a90067;
+  padding: 5px 7.5px 5px 9px;
+  text-align: center;
+  border-radius: 7px;
+}
+
+.genre-tag-adventure {
+  font-size: 13px;
+  font-weight: bold;
+  color: white;
+  background-color: #009aa9;
+  padding: 5px 7.5px 5px 9px;
+  text-align: center;
+  border-radius: 7px;
+}
+
+.genre-tag-mystery {
+  font-size: 13px;
+  font-weight: bold;
+  color: white;
+  background-color: #6e00a9;
+  padding: 5px 7.5px 5px 9px;
+  text-align: center;
+  border-radius: 7px;
+}
+
+.genre-tag-sci-fi {
+  font-size: 13px;
+  font-weight: bold;
+  color: white;
+  background-color: #004aa9;
+  padding: 5px 7.5px 5px 9px;
+  text-align: center;
+  border-radius: 7px;
+}
+
+.genre-tag-non-fiction {
+  font-size: 13px;
+  font-weight: bold;
+  color: white;
+  background-color: #017936;
+  padding: 5px 7.5px 5px 9px;
+  text-align: center;
+  border-radius: 7px;
+}
+
+.genre-tag-fantasy {
+  font-size: 13px;
+  font-weight: bold;
+  color: white;
+  background-color: #790101;
+  padding: 5px 7.5px 5px 9px;
+  text-align: center;
+  border-radius: 7px;
+}
+
+.genre-tag-comedy {
+  font-size: 13px;
+  font-weight: bold;
+  color: white;
+  background-color: #e4d210;
+  padding: 5px 7.5px 5px 9px;
+  text-align: center;
+  border-radius: 7px;
+}
+
+.genre-tag-drama {
+  font-size: 13px;
+  font-weight: bold;
+  color: white;
+  background-color: #643403;
+  padding: 5px 7.5px 5px 9px;
+  text-align: center;
+  border-radius: 7px;
+}
+
+.genre-tag-horror {
+  font-size: 13px;
+  font-weight: bold;
+  color: white;
+  background-color: #000000;
+  padding: 5px 7.5px 5px 9px;
+  text-align: center;
+  border-radius: 7px;
+}
+
+.genre-tag-thriller {
+  font-size: 13px;
+  font-weight: bold;
+  color: white;
+  background-color: #000d5f;
+  padding: 5px 7.5px 5px 9px;
+  text-align: center;
+  border-radius: 7px;
+}
+
+.genre-tag-historical {
+  font-size: 13px;
+  font-weight: bold;
+  color: white;
+  background-color: #9da80a;
+  padding: 5px 7.5px 5px 9px;
+  text-align: center;
+  border-radius: 7px;
+}
+
+.play-button {
+  position: absolute;
+  top: 23px;
+  right: 23px;
+}
+
+#review_form {
+  margin: 8px 10px 8px 10px;
+  position: relative;
+  border: 2px solid grey;
+  border-radius: 10px;
+  background-color: #9ebad9;
+}
+
+#review_form > p {
+  margin-bottom: 5px;
+}
+
+.review-box > div {
+  margin: 8px 10px 8px 10px;
+  position: relative;
+  border: 2px solid grey;
+  border-radius: 10px;
+  background-color: #9eccd9;
+}
+
+#review-submit-button {
+  position: absolute;
+  bottom: 23px;
+  right: 23px;
+}
+
+#comment-submit-button {
+  position: absolute;
+  bottom: 0px;
+  right: 23px;
+}
+
+.review-author-rating {
+  font-size: 20px;
+  margin-bottom: 5px;
+  word-spacing: 5px;
+}
+
+.review-rating-lowest {
+  position: absolute;
+  font-size: 12px;
+  font-weight: bold;
+  color: white;
+  background-color: #d30000;
+  padding: 4px 9px 5px 10px;
+  text-align: center;
+  border-radius: 60px;
+  top: 16px;
+}
+
+.review-rating-low {
+  position: absolute;
+  font-size: 12px;
+  font-weight: bold;
+  color: white;
+  background-color: #d37500;
+  padding: 4px 9px 5px 10px;
+  text-align: center;
+  border-radius: 60px;
+  top: 16px;
+}
+
+.review-rating-mid {
+  position: absolute;
+  font-size: 12px;
+  font-weight: bold;
+  color: white;
+  background-color: #d3cd00;
+  padding: 4px 9px 5px 10px;
+  text-align: center;
+  border-radius: 60px;
+  top: 16px;
+}
+
+.review-rating-high {
+  position: absolute;
+  font-size: 12px;
+  font-weight: bold;
+  color: white;
+  background-color: #a3d300;
+  padding: 4px 9px 5px 10px;
+  text-align: center;
+  border-radius: 60px;
+  top: 16px;
+}
+
+.review-rating-highest {
+  position: absolute;
+  font-size: 12px;
+  font-weight: bold;
+  color: white;
+  background-color: #23d300;
+  padding: 4px 9px 5px 10px;
+  text-align: center;
+  border-radius: 60px;
+  top: 16px;
+}
+
+.review-body {
+  line-height: 23px;
+  margin-bottom: 25px;
+  text-align: justify
+}
+.review-datetime-edit {
+  font-size: 15px;
+  position: absolute;
+  bottom: 0;
+  right: 22px;
+}
+
+.edit_button {
+}
+
+.avg-rating-zero {
+  color: #4a4a4a;
+}
+
+.avg-rating-lowest {
+  color: #9a0000;
+}
+
+.avg-rating-low {
+  color: #9a4200;
+}
+
+.avg-rating-mid {
+  color: #9a7c00;
+}
+
+.avg-rating-high {
+  color: #6a9a00;
+}
+
+.avg-rating-highest {
+  color: #009a08;
+}
+
+.profile-info-box > div {
+  margin: 8px 10px 8px 10px;
+  position: relative;
+  background-color: #cddace;
+  border: 5px groove black;
+  border-radius: 10px
+}
+
+.top-stories-header {
+  margin: 25px 25px 8px 20px;
+  position: relative;
+}
+
+.comment-form > div {
+  margin: 12px 10px 8px 10px;
+  position: relative;
+  border: 2px solid grey;
+  border-radius: 10px;
+  height: 210px;
+}
+
+.comment-form > div > p {
+  margin-bottom: 5px;
+}
+
+.comment-notice > div {
+  margin: 12px 10px 8px 10px;
+  position: relative;
+  border: 2px solid grey;
+  border-radius: 10px;
+}
+
+.comment-notice > div > p {
+  margin-bottom: 5px;
+}
+
+.comment-box > div {
+  margin: 10px 10px 8px 10px;
+  position: relative;
+  border: 2px solid grey;
+  border-radius: 10px;
+  background-color: #dadacd;
+}
+
+.comment-author {
+  margin-bottom: 5px;
+  font-size: 25px;
+}
+
+.comment-body {
+  line-height: 23px;
+  margin-bottom: 36px;
+  text-align: justify
+}
+
+.comment-datetime {
+  font-size: 15px;
+  position: absolute;
+  bottom: 0;
+  right: 23px;
+  color: #5b4d5f;
+}
+
+#follow-button {
+  position: absolute;
+  top: 12px;
+  right: 15px;
+}
+
+#unfollow-button {
+  position: absolute;
+  top: 12px;
+  right: 15px;
+}
+
+.follower-count {
+  font-size: 12px;
+  color: red;
+  border: 3px solid red;
+  padding: 4px 9px 5px 10px;
+  border-radius: 60px;
+}
+
+.story-count {
+  font-size: 12px;
+  color: blue;
+  border: 3px solid blue;
+  padding: 4px 9px 5px 10px;
+  border-radius: 60px;
+}
+
+.page-header {
+  position: relative;
+  margin: 0px 10px 20px 10px;
+  border: 3px black solid;
+  border-radius: 10px;
+  padding: 6px 15px 6px 25px;
+  background-color: #ccd6b8;
+}
+
+.sorters {
+  position: relative;
+  float: right;
+  top: 20px;
+  font-size: 14px;
+}
+
+.register-form-box {
+  margin: 8px 10px 8px 10px;
+  padding: 12px 18px 20px 18px;
+  background-color: #dacdcd;
+  border: 5px groove black;
+  border-radius: 10px;
+  height: 390px
+}
+
+.register-form-box > form > * {
+  margin-bottom: 20px;
+}
+
+.login-form-box {
+  margin: 8px 10px 8px 10px;
+  padding: 12px 18px 20px 18px;
+  background-color: #d7cdda;
+  border: 5px groove black;
+  border-radius: 10px;
+  height: 270px
+}
+
+.login-form-box > form > * {
+  margin-bottom: 20px;
+}

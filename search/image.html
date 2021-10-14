@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Image Search</title>
+        <style>
+        .buttons {
+          position: absolute;
+          right: 0px;
+          top: 0px;
+          text-align: right;
+          padding: 10px;
+        }
+
+        .search {
+          margin: 400px auto;
+          padding: 10px;
+          text-align: center;
+        }
+
+        .search > a {
+          margin: 20px;
+        }
+
+        </style>
+    </head>
+    <body>
+      <div class="buttons">
+        <a href="google.html">Google Search</a>
+        <a href="advanced.html">Advanced Search</a>
+      </div>
+      <div class="search">
+        <form action="https://google.com/search">
+          <input type="hidden" name="tbm" value="isch">
+          <p><input type="text" name="q"></p>
+          <p><input type="submit" value="Image Search"></p>
+        </form>
+      </div>
+    </body>
+</html>

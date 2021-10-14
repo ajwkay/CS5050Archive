@@ -1,0 +1,19 @@
+
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    Encyclopedia
+{% endblock %}
+
+{% block body %}
+    <h1>Page Editor</h1>
+    <form action="{% url 'pageEdit' %}" method="post">
+      {% csrf_token %}
+      <p>{{ pageEdit.title }}</p>
+      <p>{{ pageEdit.content }}</p>
+      <p><input type="submit" style="background-color: blue; color: white;"></p>
+    </form>
+
+
+
+{% endblock %}

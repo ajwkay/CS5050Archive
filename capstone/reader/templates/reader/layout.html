@@ -1,0 +1,34 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+      <title>{% block title %}IF Reader{% endblock %}</title>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+      <link rel="stylesheet" href="../../static/reader/styles.css">
+      <script type="text/javascript" src="../../static/reader/scripts.js"></script>
+      <div class="p-5">
+        <div class="containter-fluid py-1">
+          <h1 class="display-5" style="text-align: center;">Interactive Fiction Reader</h1>
+          <p class='fs-4' style="text-align: center;">
+            {% if user.is_authenticated %}
+                Welcome <strong>{{ user.username }}</strong>.
+            {% else %}
+                Not signed in.
+            {% endif %}
+          </p>
+          <hr class="my-4">
+          {% if user.is_authenticated %}
+            <p style="text-align: center;">||<span class="menu-buttons">&#9<a href="{% url 'index' %}">Home</a>&#9•&#9<a href="{% url 'submit' %}">Upload</a>&#9•&#9<a href="{% url 'profile' id=user.id %}">Profile</a>&#9•&#9<a href="{% url 'logout' %}">Logout</a>&#9</span>||</p>
+          {% else %}
+            <p style="text-align: center;">||<span class="menu-buttons">&#9<a href="{% url 'index' %}">Home</a>&#9•&#9<a href="{% url 'login' %}">Login</a> • <a href="{% url 'register' %}">Register</a>&#9</span>||</p>
+          {% endif %}
+        </div>
+      </div>
+  </head>
+  <body style="background-color: #deddd8;">
+    {% block body %}
+    {% endblock %}
+  </body>
+</html>

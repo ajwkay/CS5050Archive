@@ -1,0 +1,40 @@
+urls.py:
+
+path('css/', views.css, name="CSS"),
+path('django/', views.django, name="Django"),
+path('git/', views.git, name="Git"),
+path('html/', views.html, name="HTML"),
+path('python/', views.python, name="Python"),
+path('results/', views.results, name="Results"),
+
+
+views.py:
+def css(request):
+    return render(request, "encyclopedia/css.html", {
+        "entries": util.get_entry('CSS'),
+        "form" : SearchForm()
+    })
+
+def django(request):
+    return render(request, "encyclopedia/django.html", {
+        "entries": util.get_entry('Django'),
+        "form" : SearchForm()
+    })
+
+def git(request):
+    return render(request, "encyclopedia/git.html", {
+        "entries": util.get_entry('Git'),
+        "form" : SearchForm()
+    })
+
+def html(request):
+    return render(request, "encyclopedia/html.html", {
+        "entries": util.get_entry('HTML'),
+        "form" : SearchForm()
+    })
+
+def python(request):
+    return render(request, "encyclopedia/python.html", {
+        "entries": util.get_entry('Python'),
+        "form" : SearchForm()
+    })

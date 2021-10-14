@@ -1,0 +1,23 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+  {% if not entries %}
+    ERROR - Encyclopedia
+  {% endif %}
+    {{ entryTitle }} - Encyclopedia
+{% endblock %}
+
+{% block body %}
+    {% if not entries %}
+    <h1>ERROR 404</h1>
+    {% endif %}
+      {% if entries %}
+        {{ entries | safe }}
+        <form action="{% url 'Page' name=entryTitle %}" method="post">
+          {% csrf_token %}
+          <input type="submit" value="Edit" style="background-color: blue; color: white;">
+        </form>
+      {% else %}
+        Sorry, no such page was found.
+      {% endif %}
+{% endblock %}

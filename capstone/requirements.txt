@@ -1,0 +1,29 @@
+pillow==8.2.0
+
+django-dajax==0.9.2
+
+django-dajaxice==0.7
+
+patool==1.12
+
+unrar==0.4
+
+
+To Do:
+- Index Pages
+  - Browse stories in reverse chronological
+  - Clicking on story leads to story pages
+  - Show number of likes/reviews
+  - Tab to sort/filter by following/genre
+- Profile pages
+  - Showcase top 3 stories?
+  - Show all stories
+  - playlist
+  - edit/delete comments
+  - edit profile page
+-Stories pages
+  - cover
+  - play button linked to html
+  - Stars as rating
+  - Average Rating calculation
+  - bookmarks

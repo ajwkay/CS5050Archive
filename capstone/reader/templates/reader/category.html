@@ -1,0 +1,69 @@
+{% extends "reader/layout.html" %}
+
+{% block body %}
+
+<div class="top-stories-header"><strong style="font-size:30px;">{{Header}}</strong></div>
+
+<div id="outer-box">
+{% for story in All_Stories %}
+  <div class="story-icon-box">
+    <div class="alert alert-dark" role="alert">
+      <img src="{{story.cover.url}}" class="story-icon-cover">
+      <p class="story-icon-title-author"><strong>
+        <a href="{% url 'story' id=story.story_folder_id %}">{{story.title}}</a>
+        {% if not Author_Type %}
+         by <a href="{% url 'profile' id=story.author.id %}">{{story.author}}</a>
+        {% endif %}
+      </strong></p>
+      <p class="story-icon-genre-rating">
+          {% if story.avg_rating == 0.0 %}
+          <span class="avg-rating-zero" id="avg_rating">
+          {% elif story.avg_rating <= 2.0 %}
+          <span class="avg-rating-lowest" id="avg_rating">
+          {% elif story.avg_rating > 2.0 and story.avg_rating <= 4.0 %}
+          <span class="avg-rating-low" id="avg_rating">
+          {% elif story.avg_rating > 4.0 and story.avg_rating <= 6.0 %}
+          <span class="avg-rating-mid" id="avg_rating">
+          {% elif story.avg_rating > 6.0 and story.avg_rating <= 8.0 %}
+          <span class="avg-rating-high" id="avg_rating">
+          {% elif story.avg_rating >= 8.0 %}
+          <span class="avg-rating-highest" id="avg_rating">
+          {% endif %}
+          {{story.avg_rating|floatformat:2}}★</span> ({{story.reviews.count}}
+          {% if story.reviews.count == 1 %}
+          Review)&nbsp;
+          {% else %}
+          Reviews)&nbsp;
+          {% endif %}
+          {% if story.tags == 'ROMANCE' %}
+            <span class="genre-tag-romance" onclick="gotoCat(this)">
+          {% elif story.tags == 'ADVENTURE' %}
+            <span class="genre-tag-adventure" onclick="gotoCat(this)">
+          {% elif story.tags == 'MYSTERY' %}
+            <span class="genre-tag-mystery" onclick="gotoCat(this)">
+          {% elif story.tags == 'SCI-FI' %}
+            <span class="genre-tag-sci-fi" onclick="gotoCat(this)">
+          {% elif story.tags == 'NON-FICTION' %}
+            <span class="genre-tag-non-fiction" onclick="gotoCat(this)">
+          {% elif story.tags == 'FANTASY' %}
+            <span class="genre-tag-fantasy" onclick="gotoCat(this)">
+          {% elif story.tags == 'COMEDY' %}
+            <span class="genre-tag-comedy" onclick="gotoCat(this)">
+          {% elif story.tags == 'DRAMA' %}
+            <span class="genre-tag-drama" onclick="gotoCat(this)">
+          {% elif story.tags == 'HORROR' %}
+            <span class="genre-tag-horror" onclick="gotoCat(this)">
+          {% elif story.tags == 'THRILLER' %}
+            <span class="genre-tag-thriller" onclick="gotoCat(this)">
+          {% elif story.tags == 'HISTORICAL' %}
+            <span class="genre-tag-historical" onclick="gotoCat(this)">
+          {% endif %}
+              {{story.tags}}
+            </span>
+        <p class="story-icon-abstract">{{story.description}}</p>
+        <p class="story-icon-datetime">Submitted: {{story.date_time_submitted}}</p>
+      </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

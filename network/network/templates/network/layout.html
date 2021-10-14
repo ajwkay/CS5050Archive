@@ -1,0 +1,102 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{% block title %}Social Network{% endblock %}</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script language="JavaScript">
+          $(document).ready(function() {
+              $('.like_form').submit(function() {
+                  $.ajax({
+                      data: $(this).serialize(),
+                      type: $(this).attr('method'),
+                      url: $(this).attr('action'),
+                      success: function(response) {
+                          $('#' + response.id + ".like_button").html(response.new_button);
+                      }
+                  });
+                  return false;
+              });
+          });
+
+          document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll(".edit_button").forEach(function(button) {
+                button.onclick = function() {
+                  postID = button.dataset.pk;
+                  document.querySelector('#ebod' + postID).innerHTML = "<input hidden type='text' name='postID' id='postID' value=" + postID+ "><textarea name='new_body' id='" + postID + "' rows='4' cols='50'></textarea><p><input type='submit' value='Submit'></p>";
+                  document.querySelector('#ebut' + postID).innerHTML = "";
+                }
+              });
+            });
+
+            $(document).ready(function() {
+                $('.edit_form').submit(function() {
+                    $.ajax({
+                        data: $(this).serialize(),
+                        type: $(this).attr('method'),
+                        url: $(this).attr('action'),
+                        success: function(response) {
+                            $('#ebod' + response.id).html(response.new_body);
+                            $('#ebut' + response.id).html("[Edit]");
+                        }
+                    });
+                    return false;
+                });
+            });
+
+        </script>
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link href="{% static 'network/styles.css' %}" rel="stylesheet">#
+        <style>
+          .main {
+            height: 400px;
+            width: auto;
+            border: 5px outset red;
+            padding: 5px;
+            margin: 5px;
+            background-color: lightblue;
+          }
+        </style>
+    </head>
+    <body>
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">Network</a>
+
+            <div>
+              <ul class="navbar-nav mr-auto">
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'profile' id=user.id %}"><strong>{{ user.username }}</strong></a>
+                    </li>
+                {% endif %}
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'index' %}">All Posts</a>
+                </li>
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'feed' %}">Following</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">Log In</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'register' %}">Register</a>
+                    </li>
+                {% endif %}
+              </ul>
+            </div>
+          </nav>
+
+        <div class="body">
+            {% block body %}
+            {% endblock %}
+        </div>
+    </body>
+</html>

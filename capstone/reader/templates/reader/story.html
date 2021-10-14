@@ -1,0 +1,136 @@
+{% extends "reader/layout.html" %}
+
+{% block body %}
+<div class="story-icon-box">
+  <div class="alert alert-dark" role="alert">
+    <form class="play-button" action="{% url 'reader' id=This_Story.story_folder_id type=This_Story.editor_used %}" method="post">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-primary btn-lg">Play⏵</button>
+    </form>
+    <img src="{{This_Story.cover.url}}" class="story-icon-cover">
+    <p class="story-icon-title-author"><strong>
+      {{This_Story.title}} by
+      <a href="{% url 'profile' id=This_Story.author.id %}">{{This_Story.author}}</a>
+    </strong></p>
+    <p class="story-icon-genre-rating">
+        {% if This_Story.avg_rating == 0.0 %}
+        <span class="avg-rating-zero" id="avg_rating">
+        {% elif This_Story.avg_rating <= 2.0 %}
+        <span class="avg-rating-lowest" id="avg_rating">
+        {% elif This_Story.avg_rating > 2.0 and This_Story.avg_rating <= 4.0 %}
+        <span class="avg-rating-low" id="avg_rating">
+        {% elif This_Story.avg_rating > 4.0 and This_Story.avg_rating <= 6.0 %}
+        <span class="avg-rating-mid" id="avg_rating">
+        {% elif This_Story.avg_rating > 6.0 and This_Story.avg_rating <= 8.0 %}
+        <span class="avg-rating-high" id="avg_rating">
+        {% elif This_Story.avg_rating >= 8.0 %}
+        <span class="avg-rating-highest" id="avg_rating">
+        {% endif %}
+        {{This_Story.avg_rating|floatformat:2}}★</span> ({{This_Story.reviews.count}}
+        {% if This_Story.reviews.count == 1 %}
+        Review)&nbsp;
+        {% else %}
+        Reviews)&nbsp;
+        {% endif %}
+      {% if This_Story.tags == 'ROMANCE' %}
+        <span class="genre-tag-romance" onclick="gotoCat(this)">
+      {% elif This_Story.tags == 'ADVENTURE' %}
+        <span class="genre-tag-adventure" onclick="gotoCat(this)">
+      {% elif This_Story.tags == 'MYSTERY' %}
+        <span class="genre-tag-mystery" onclick="gotoCat(this)">
+      {% elif This_Story.tags == 'SCI-FI' %}
+        <span class="genre-tag-sci-fi" onclick="gotoCat(this)">
+      {% elif This_Story.tags == 'NON-FICTION' %}
+        <span class="genre-tag-non-fiction" onclick="gotoCat(this)">
+      {% elif This_Story.tags == 'FANTASY' %}
+        <span class="genre-tag-fantasy" onclick="gotoCat(this)">
+      {% elif This_Story.tags == 'COMEDY' %}
+        <span class="genre-tag-comedy" onclick="gotoCat(this)">
+      {% elif This_Story.tags == 'DRAMA' %}
+        <span class="genre-tag-drama" onclick="gotoCat(this)">
+      {% elif This_Story.tags == 'HORROR' %}
+        <span class="genre-tag-horror" onclick="gotoCat(this)">
+      {% elif This_Story.tags == 'THRILLER' %}
+        <span class="genre-tag-thriller" onclick="gotoCat(this)">
+      {% elif This_Story.tags == 'HISTORICAL' %}
+        <span class="genre-tag-historical" onclick="gotoCat(this)">
+      {% endif %}
+          {{This_Story.tags}}
+        </span></p>
+    <p class="story-icon-abstract">{{This_Story.description}}</p>
+    <p class="story-icon-datetime">Submitted: {{This_Story.date_time_submitted}}</p>
+  </div>
+</div>
+
+
+<hr style="border-top: 1px solid grey; margin: auto; margin-top: 25px; width: 97%; float: center;">
+<hr style="border-top: 1px solid grey; margin: auto; margin-top: 2px; width: 97%;">
+
+
+<div class="top-stories-header" style="margin-top: 19px;"><h3 style="display: inline;"><strong><u>Reviews</u></strong></h3></div>
+{% if user != This_Story.author %}
+  {% if user.is_authenticated %}
+  <div class="alert alert-primary" role="alert" id="review_form">
+    {% if Reviewed_Status == False %}
+      <p>Leave a review!</p>
+      <form action="{% url 'story' id=This_Story.story_folder_id %}" method='post'>
+        {% csrf_token %}
+        <p>{{Review_Form.body}}</p>
+        <p>Rating:&nbsp;{{Review_Form.rating}}★<input type="submit" class="btn btn-success btn-sm" value="Submit" id="review-submit-button"></p>
+      </form>
+    </div>
+    {% else %}
+      Thanks for leaving a review!</div>
+    {% endif %}
+  {% else %}
+  <div class="alert alert-primary" role="alert" id="review_form">Login/Register to leave a review!</div>
+  {% endif %}
+
+{% endif %}
+
+{% if not This_Story.reviews.all  %}
+<p style="margin: 20px 0 50px 15px;">This story has no reviews yet.</p>
+{% endif %}
+
+{% for review in This_Story.reviews.all %}
+<div class="review-box">
+  <div class="alert alert-primary" role="alert">
+    <p class="review-author-rating"><a href="{% url 'profile' id=review.author.id %}">{{review.author}}</a>&nbsp;
+      {% if review.rating == 1 or review.rating == 2 %}
+        <span class="review-rating-lowest" id="review-rating{{review.id}}">
+      {% elif review.rating == 3 or review.rating == 4 %}
+        <span class="review-rating-low" id="review-rating{{review.id}}">
+      {% elif review.rating == 5 or review.rating == 6 %}
+        <span class="review-rating-mid" id="review-rating{{review.id}}">
+      {% elif review.rating == 7 or review.rating == 8 %}
+        <span class="review-rating-high" id="review-rating{{review.id}}">
+      {% elif review.rating == 9 or review.rating == 10 %}
+        <span class="review-rating-highest" id="review-rating{{review.id}}">
+      {% endif %}
+      {{review.rating}}★</span>
+    </p>
+    <form action='{% url "edit" %}' method='post' class='edit_form'>{% csrf_token %}
+      <span id="ebod{{review.id}}"><p class="review-body">{{review.body}}</p></span></form>
+    <form action="{% url 'like' %}" method="post" class="like_form">
+      {% csrf_token %}
+      <input hidden type="text" name="reviewID" id="reviewID" value={{review.id}}>
+      <span class="like_button" id='{{review.id}}'>
+        {% if user.is_authenticated %}
+          {% for person in review.likes.all %} {% if user == person %} <div hidden> {% endif %} {% endfor %}
+          <input type="submit" class="btn btn-outline-primary btn-sm" value="{{ review.likes.all|length }} 🤍">
+          {% for person in review.likes.all %} {% if user == person %} </div> <input type="submit" class="btn btn-primary btn-sm" value="{{ review.likes.all|length }} ❤️"> {% endif %} {% endfor %}
+        {% else %}
+          {{ review.likes.all|length }} 🤍
+        {% endif %}
+      </span>
+      <p class="review-datetime-edit">
+    {% if user == review.author %}
+        <a action="#" class="edit_button" id='ebut{{review.id}}' data-pk='{{review.id}}' data-story='{{This_Story.story_folder_id}}' style="color:blue"><u>[Edit]</u> &nbsp;•&nbsp;</a>
+    {% endif %}
+        {{review.date_time_posted}}
+      </p>
+  </form>
+  </div>
+</div>
+{% endfor %}
+{% endblock %}
